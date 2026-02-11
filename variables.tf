@@ -47,18 +47,18 @@ EOT
     name                            = string
     resource_group_name             = string
     storage_account_id              = string
-    sku_name                        = optional(string, "Basic")
-    service_side_encryption_enabled = optional(bool, false)
-    public_network_access_enabled   = optional(bool, true)
+    sku_name                        = optional(string) # Default: "Basic"
+    service_side_encryption_enabled = optional(bool)   # Default: false
+    public_network_access_enabled   = optional(bool)   # Default: true
     primary_user_assigned_identity  = optional(string)
-    kind                            = optional(string, "Default")
+    kind                            = optional(string) # Default: "Default"
     friendly_name                   = optional(string)
     high_business_impact            = optional(bool)
     tags                            = optional(map(string))
     description                     = optional(string)
     container_registry_id           = optional(string)
     image_build_compute_name        = optional(string)
-    v1_legacy_mode_enabled          = optional(bool, false)
+    v1_legacy_mode_enabled          = optional(bool) # Default: false
     identity = object({
       identity_ids = optional(set(string))
       type         = string
@@ -75,10 +75,10 @@ EOT
     }))
     managed_network = optional(object({
       isolation_mode                = optional(string)
-      provision_on_creation_enabled = optional(bool, false)
+      provision_on_creation_enabled = optional(bool) # Default: false
     }))
     serverless_compute = optional(object({
-      public_ip_enabled = optional(bool, false)
+      public_ip_enabled = optional(bool) # Default: false
       subnet_id         = optional(string)
     }))
   }))
