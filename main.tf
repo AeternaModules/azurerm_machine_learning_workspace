@@ -7,17 +7,18 @@ resource "azurerm_machine_learning_workspace" "machine_learning_workspaces" {
   name                            = each.value.name
   resource_group_name             = each.value.resource_group_name
   storage_account_id              = each.value.storage_account_id
+  storage_account_access_type     = each.value.storage_account_access_type
   sku_name                        = each.value.sku_name
   service_side_encryption_enabled = each.value.service_side_encryption_enabled
   public_network_access_enabled   = each.value.public_network_access_enabled
   primary_user_assigned_identity  = each.value.primary_user_assigned_identity
-  kind                            = each.value.kind
-  friendly_name                   = each.value.friendly_name
   high_business_impact            = each.value.high_business_impact
+  image_build_compute_name        = each.value.image_build_compute_name
   tags                            = each.value.tags
+  friendly_name                   = each.value.friendly_name
   description                     = each.value.description
   container_registry_id           = each.value.container_registry_id
-  image_build_compute_name        = each.value.image_build_compute_name
+  kind                            = each.value.kind
   v1_legacy_mode_enabled          = each.value.v1_legacy_mode_enabled
 
   identity {
