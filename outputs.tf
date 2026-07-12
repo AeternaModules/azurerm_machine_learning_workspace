@@ -1,3 +1,7 @@
+output "machine_learning_workspaces_id" {
+  description = "Map of id values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
+  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.id }
+}
 output "machine_learning_workspaces_application_insights_id" {
   description = "Map of application_insights_id values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
   value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.application_insights_id }
