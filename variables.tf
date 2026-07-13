@@ -48,10 +48,10 @@ EOT
     name                            = string
     resource_group_name             = string
     storage_account_id              = string
-    storage_account_access_type     = optional(string) # Default: "AccessKey"
-    sku_name                        = optional(string) # Default: "Basic"
-    service_side_encryption_enabled = optional(bool)   # Default: false
-    public_network_access_enabled   = optional(bool)   # Default: true
+    storage_account_access_type     = optional(string)
+    sku_name                        = optional(string)
+    service_side_encryption_enabled = optional(bool)
+    public_network_access_enabled   = optional(bool)
     primary_user_assigned_identity  = optional(string)
     high_business_impact            = optional(bool)
     image_build_compute_name        = optional(string)
@@ -59,8 +59,8 @@ EOT
     friendly_name                   = optional(string)
     description                     = optional(string)
     container_registry_id           = optional(string)
-    kind                            = optional(string) # Default: "Default"
-    v1_legacy_mode_enabled          = optional(bool)   # Default: false
+    kind                            = optional(string)
+    v1_legacy_mode_enabled          = optional(bool)
     identity = object({
       identity_ids = optional(set(string))
       type         = string
@@ -77,21 +77,13 @@ EOT
     }))
     managed_network = optional(object({
       isolation_mode                = optional(string)
-      provision_on_creation_enabled = optional(bool) # Default: false
+      provision_on_creation_enabled = optional(bool)
     }))
     serverless_compute = optional(object({
-      public_ip_enabled = optional(bool) # Default: false
+      public_ip_enabled = optional(bool)
       subnet_id         = optional(string)
     }))
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.machine_learning_workspaces : (
-        v.kind == null || (contains(["Default", "FeatureStore"], v.kind))
-      )
-    ])
-    error_message = "must be one of: Default, FeatureStore"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_machine_learning_workspace's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -134,6 +126,9 @@ EOT
   #   source:    [from commonids.ValidateUserAssignedIdentityID] !ok
   # path: identity.identity_ids[*]
   #   source:    [from commonids.ValidateUserAssignedIdentityID] err != nil
+  # path: kind
+  #   condition: contains(["Default", "FeatureStore"], value)
+  #   message:   must be one of: Default, FeatureStore
   # path: primary_user_assigned_identity
   #   source:    [from commonids.ValidateUserAssignedIdentityID] !ok
   # path: primary_user_assigned_identity
@@ -142,6 +137,10 @@ EOT
   #   source:    [from registries.ValidateRegistryID] !ok
   # path: container_registry_id
   #   source:    [from registries.ValidateRegistryID] err != nil
+  # path: encryption.key_vault_id
+  #   source:    [from validationFunctionForResourceID] !ok
+  # path: encryption.key_vault_id
+  #   source:    [from validationFunctionForResourceID] err != nil
   # path: encryption.key_id
   #   source:    validation.IsURLWithHTTPorHTTPS(...) - no translation rule yet, add one
   # path: encryption.user_assigned_identity_id
