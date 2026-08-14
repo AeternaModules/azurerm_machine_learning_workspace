@@ -20,11 +20,11 @@ output "machine_learning_workspaces_discovery_url" {
 }
 output "machine_learning_workspaces_encryption" {
   description = "Map of encryption values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
-  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.encryption if v.encryption != null && length(v.encryption) > 0 }
+  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => one(v.encryption) if v.encryption != null && length(v.encryption) > 0 }
 }
 output "machine_learning_workspaces_feature_store" {
   description = "Map of feature_store values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
-  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.feature_store if v.feature_store != null && length(v.feature_store) > 0 }
+  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => one(v.feature_store) if v.feature_store != null && length(v.feature_store) > 0 }
 }
 output "machine_learning_workspaces_friendly_name" {
   description = "Map of friendly_name values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
@@ -36,7 +36,7 @@ output "machine_learning_workspaces_high_business_impact" {
 }
 output "machine_learning_workspaces_identity" {
   description = "Map of identity values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
-  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.identity if v.identity != null && length(v.identity) > 0 }
+  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => one(v.identity) if v.identity != null && length(v.identity) > 0 }
 }
 output "machine_learning_workspaces_image_build_compute_name" {
   description = "Map of image_build_compute_name values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
@@ -56,7 +56,7 @@ output "machine_learning_workspaces_location" {
 }
 output "machine_learning_workspaces_managed_network" {
   description = "Map of managed_network values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
-  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.managed_network if v.managed_network != null && length(v.managed_network) > 0 }
+  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => one(v.managed_network) if v.managed_network != null && length(v.managed_network) > 0 }
 }
 output "machine_learning_workspaces_name" {
   description = "Map of name values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
@@ -76,7 +76,7 @@ output "machine_learning_workspaces_resource_group_name" {
 }
 output "machine_learning_workspaces_serverless_compute" {
   description = "Map of serverless_compute values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
-  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => v.serverless_compute if v.serverless_compute != null && length(v.serverless_compute) > 0 }
+  value       = { for k, v in azurerm_machine_learning_workspace.machine_learning_workspaces : k => one(v.serverless_compute) if v.serverless_compute != null && length(v.serverless_compute) > 0 }
 }
 output "machine_learning_workspaces_service_side_encryption_enabled" {
   description = "Map of service_side_encryption_enabled values across all machine_learning_workspaces, keyed the same as var.machine_learning_workspaces"
